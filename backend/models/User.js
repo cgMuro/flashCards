@@ -28,7 +28,7 @@ class User {
     }
 
     // Create user
-    async createUser(username, email, password) {
+    async createUser({ username, email, password }) {
         try {
             const sql = mysql.format("INSERT INTO User (username, email, password) VALUES (?, ?, ?)", [username, email, password]);
             const res = await query(sql);

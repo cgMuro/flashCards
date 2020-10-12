@@ -1,0 +1,44 @@
+/* DECKS PAGE */
+
+.fa-edit {
+    background-color: lightblue;
+    border-radius: 50%;
+    padding: 1rem;
+}
+
+.deck-container {
+    background-color: lightblue;
+    height: 40vh;
+    border-radius: 5%;
+}
+
+.fa-minus-circle {
+    font-size: 25px;
+    padding: 2px;
+    color: rgb(112, 133, 146);
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    z-index: 100;
+}
+
+.add-deck-container {
+    background-color: white;
+    border: 1px solid lightblue;
+    height: 40vh;
+    width: 40vw;
+    border-radius: 5%;
+}
+
+.add-deck-container > i {
+    color: lightblue;
+}
+
+.add-deck-input {
+    border: none;
+    background-color: lightblue;
+}
+
+.add-deck-input:focus {
+    text-decoration: none;
+}

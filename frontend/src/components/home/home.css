@@ -1,0 +1,11 @@
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+    background-color: lightblue;
+}
+
+#card-home {
+    background-color: white;
+    padding: 10rem 5rem;
+    border-radius: 50px;
+}

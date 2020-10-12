@@ -20,8 +20,7 @@ exports.createUser = async(req, res, next) => {
     req.body.password = await bcrypt.hash(password, salt);
 
     try {
-        const { username, email, password } = req.body;
-        await User.createUser(username, email, password);
+        await User.createUser(req.body);
         const newUser = await User.getUser(email);
 
         jwt.sign(
@@ -30,7 +29,7 @@ exports.createUser = async(req, res, next) => {
             { expiresIn: 3600 },
             (err, token) => {
                 if(err) throw err;
-                return res.status(201).json({ success: true, message: 'User created', newUser, token });
+                return res.status(201).json({ success: true, message: 'User created', user: newUser, token });
             }
         );
     } catch (error) {
