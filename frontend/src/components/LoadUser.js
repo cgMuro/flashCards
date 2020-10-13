@@ -18,7 +18,7 @@ export default function LoadUser() {
             <Modal isOpen={alertMsg !== '' ? true : false}>
                 <ModalBody>
                     <h5 className="text-center mb-4">{alertMsg}</h5>
-                    <Button onClick={() => setAlertMsg('')} block>Close</Button>
+                    <Button color="info" outline onClick={() => setAlertMsg('')} block>Close</Button>
                 </ModalBody>
             </Modal>
         </>

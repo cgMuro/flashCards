@@ -69,7 +69,7 @@ class Card {
             const sql = mysql.format("INSERT INTO Card (question, answer, user_id, deck_id) VALUES (?, ?, ?, ?)", [question, answer, user_id, deck_id]);
             const res = await query(sql);
             cursor.commit();
-            return res;
+            return res.insertId;
         } catch (error) {
             return error;
         }

@@ -5,9 +5,9 @@ import ApiReducer from './reducers/ApiReducer';
 import { ErrorContext } from './ErrorState';
 import { AuthContext } from './AuthState';
 
-export const ApiContext = createContext();
+export const DeckContext = createContext();
 
-export function ApiProvider(props) {
+export function DeckProvider(props) {
 
     const [deckState, dispatch] = useReducer(ApiReducer, []);
     const { setError } = useContext(ErrorContext);
@@ -44,11 +44,10 @@ export function ApiProvider(props) {
     }
 
     // Update deck
-    const updateDeck = async(id, data) => {
+    const updateDeck = async(id, name) => {
         try {
-            const res = await axios.put(`/api/decks/${id}`, data, tokenConfig());
-            // dispatch({ type: 'ADD', payload: res.data.data });
-            // DISPATCH?
+            const res = await axios.put(`/api/decks/${id}`, { name }, tokenConfig());
+            dispatch({ type: 'UPDATE', payload: res.data.data });
         } catch (error) {
             setError(error.message, error.name);
         }
@@ -58,16 +57,16 @@ export function ApiProvider(props) {
     const deleteDeck = async(id) => {
         try {
             const res = await axios.delete(`/api/decks/${id}`, tokenConfig());
-            // dispatch({ type: 'ADD', payload: res.data.data });
-            // DISPATCH?
+            console.log(res);
+            dispatch({ type: 'DELETE', payload: res.data.data });
         } catch (error) {
             setError(error.message, error.name);
         }
     }
 
     return (
-        <ApiContext.Provider value={{ deckState, getDecks, getDeck, createDeck, updateDeck, deleteDeck }}>
+        <DeckContext.Provider value={{ deckState, getDecks, getDeck, createDeck, updateDeck, deleteDeck }}>
             {props.children}
-        </ApiContext.Provider>
+        </DeckContext.Provider>
     )
 }

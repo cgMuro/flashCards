@@ -6,11 +6,13 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ErrorProvider } from './context/ErrorState';
 import { AuthProvider } from './context/AuthState';
 import { AlertProvider } from './context/AlertState';
-import { ApiProvider } from './context/ApiState';
+import { DeckProvider } from './context/DeckState';
 import LoadUser from './components/LoadUser';
 import Welcome from './components/welcome/Welcome';
 import Home from './components/home/Home';
-import Decks from './components/deck/Decks';
+import BluePrint from './components/deck/BluePrint';
+import { CardProvider } from './context/CardState';
+import Play from './components/deck/Play';
 
 function App() {
   return (
@@ -18,16 +20,20 @@ function App() {
       <ErrorProvider>
         <AuthProvider>
           <AlertProvider>
-            <ApiProvider> 
-              <LoadUser />
-              <Switch>
-                <Route path='/' exact component={Welcome} />
-                <Route path='/login' exact component={Welcome} />
-                <Route path='/register' exact component={Welcome} />
-                <Route path='/home' exact component={Home} />
-                <Route path='/decks' exact component={Decks} />
-              </Switch>
-            </ApiProvider>
+            <DeckProvider>
+              <CardProvider>
+                <LoadUser />
+                <Switch>
+                  <Route path='/' exact component={Welcome} />
+                  <Route path='/login' exact component={Welcome} />
+                  <Route path='/register' exact component={Welcome} />
+                  <Route path='/home' exact component={Home} />
+                  <Route path='/decks' exact component={BluePrint} />
+                  <Route path='/deck/:id/:deckname' exact component={BluePrint} />
+                  <Route path='/deck/:id/:deckname/learn' exact component={Play} />
+                </Switch>
+              </CardProvider>
+            </DeckProvider>
           </AlertProvider>
         </AuthProvider>
       </ErrorProvider>

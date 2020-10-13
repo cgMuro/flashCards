@@ -2,10 +2,36 @@
     width: 100vw;
     height: 100vh;
     background-color: lightblue;
+    display: flex;
+    justify-content: center;
 }
 
-#card-home {
+.flip-card {
+    perspective: 1000px;
+    margin-top: 5.5rem;
+}
+
+.flip-card-inner {
+    position: relative;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.flip-card-inner-active {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
     background-color: white;
-    padding: 10rem 5rem;
     border-radius: 50px;
+    padding: 10rem 2rem;
+    min-height: 77.5vh;
+}
+
+
+.flip-card-back {
+    transform: rotateY(180deg);
 }

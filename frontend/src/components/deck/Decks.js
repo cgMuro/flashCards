@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Container, Row, Col, Input, Form } from 'reactstrap';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 // Components, css
 import './main.css';
-import { ApiContext } from '../../context/ApiState';
+import { DeckContext } from '../../context/DeckState';
 import { AuthContext } from '../../context/AuthState';
 import { AlertContext } from '../../context/AlertState';
 
-export default function Decks() {
+export default function Decks({ editState }) {
 
     const history = useHistory();
     const { auth } = useContext(AuthContext);
@@ -23,21 +23,15 @@ export default function Decks() {
     }, [auth.isAuthenticated])
 
     // Init states
-    const { deckState, getDecks, createDeck } = useContext(ApiContext);
-    const [editState, setEditState] = useState(false);
-    
-    
+    const { deckState, getDecks, createDeck, updateDeck, deleteDeck } = useContext(DeckContext);
+
+
 
     // Get decks from database
     useEffect(() => {
         getDecks();
     }, []);
-    
-    // Change EditState
-    const handleEditState = () => {
-        setEditState((prevState) => !prevState);
-    }
-    
+
 
 
     // CREATE NEW DECK stuff
@@ -58,82 +52,97 @@ export default function Decks() {
     }
 
 
+    // UPDATE DECK stuff
+    const submitUpdateDeck = (e) => {
+        updateDeck(e.target.firstElementChild.id, e.target.firstElementChild.value);
+        setAlertMsg(`Deck updated`);
+        e.preventDefault();
+    }
+
 
     // DELETE DECK stuff
     // Delete function
-    const handleDelete = () => {
-        console.log('delete');
+    const handleDelete = ({ id, name }) => {
+        deleteDeck(id);
+        setAlertMsg(`Deck "${name}" was just deleted`);
     }
 
     return (
-        <Container fluid>
-            <Container fluid className="p-0 text-right mt-2" id="edit-container">
-                <div><i className="fas fa-edit" onClick={() => handleEditState()}></i></div>
-            </Container>
-            <Container fluid className="mt-5">
-                {
-                    deckState.length > 0
-                        ?
-                        <Row className="mt-5 d-flex justify-content-center">
-                            {
-                                deckState.map(deck => (
+        <Container fluid className="mt-5">
+            {
+                deckState.length > 0
+                    ?
+                    <Row className="mt-5 d-flex justify-content-center">
+                        {
+                            deckState.map(deck => (
                                     <Col
                                         key={deck.id}
                                         xs="5"
                                         className="deck-container mx-2 my-4 d-flex justify-content-center align-items-center"
                                         onClick={() => {
-                                            if (!editState) { history.push(`/deck/${deck.id}`) }
+                                            if (!editState) { 
+                                                history.push(`/deck/${deck.id}/${deck.name}`);
+                                            }
                                         }}
                                     >
                                         {
-                                            editState 
-                                            ? 
-                                                <i 
-                                                    className="fas fa-minus-circle"
-                                                    onClick={() => handleDelete()}
-                                                ></i> 
-                                            : null
+                                            editState
+                                                ?
+                                                <>
+                                                    <i
+                                                        className="fas fa-minus-circle"
+                                                        onClick={() => handleDelete(deck)}
+                                                    ></i>
+                                                    <Form onSubmit={(e) => submitUpdateDeck(e)}>
+                                                        <Input
+                                                            id={deck.id}
+                                                            type="text"
+                                                            placeholder={deck.name}
+                                                            className="update-deck-input"
+                                                        />
+                                                    </Form>
+                                                </>
+                                                :
+                                                <p className="text-center">{deck.name}</p>
                                         }
-                                        <p className="text-center">{deck.name}</p>
                                     </Col>
-                                ))
-                            }
-                        </Row>
-                        :
-                        <h3>You have no decks...create one</h3>
+                            ))
+                        }
+                    </Row>
+                    :
+                    <h3>You have no decks...create one</h3>
 
-                }
-                {
-                    editState
+            }
+            {
+                editState
                     ?
-                        <Row>
-                            <Col 
-                                sm={6}
-                                className="add-deck-container m-4 d-flex justify-content-center align-items-center"
-                                onClick={() => handleAddState()}
-                            >
-                                {
-                                    !addState
+                    <Row>
+                        <Col
+                            sm={6}
+                            className="add-deck-container m-4 d-flex justify-content-center align-items-center"
+                            onClick={() => handleAddState()}
+                        >
+                            {
+                                !addState
                                     ?
-                                        <i className="fas fa-plus-circle fa-4x"></i>
+                                    <i className="fas fa-plus-circle fa-4x"></i>
                                     :
                                     <Form onSubmit={(e) => submitNewDeck(e)}>
-                                        <Input 
-                                            type="text" 
+                                        <Input
+                                            type="text"
                                             value={newDeckName}
                                             onChange={(e) => setNewDeckName(e.target.value)}
                                             autoFocus
                                             className="add-deck-input"
                                         />
                                     </Form>
-                                }
-                            </Col>
-                        </Row>
+                            }
+                        </Col>
+                    </Row>
 
                     :
-                        null
-                }
-            </Container>
+                    null
+            }
         </Container>
     )
 }

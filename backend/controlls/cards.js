@@ -29,14 +29,15 @@ exports.getUserCards = async(req, res, next) => {
 
 
 // @desc --> Create new card
-// @route --> POST api/deck/:deck_id
+// @route --> POST api/cards/deck/:deck_id
 // @acces --> Private
 exports.createCard = async(req, res, next) => {
     try {
         req.body.user_id = req.user.id;
         req.body.deck_id = req.params.deck_id;
-        await Card.createCard(req.body);
-        res.status(201).json({ success: true, message: 'Card created' });
+        newCardId = await Card.createCard(req.body);
+        newCard = await Card.getCard(newCardId);
+        res.status(201).json({ success: true, message: 'Card created', data: newCard });
     } catch (error) {
         next(new Error(error));
     }
@@ -51,7 +52,7 @@ exports.updateCard = async(req, res, next) => {
         req.body.id = req.params.id
         await Card.updateCard(req.body);
         const card = await Card.getCard(req.params.id);
-        res.status(200).json({ success: true, message: 'Card updated', card_updated: card });
+        res.status(200).json({ success: true, message: 'Card updated', data: card });
     } catch (error) {
         console.log(error)
         next(new Error(error));
@@ -66,7 +67,7 @@ exports.deleteCard = async(req, res, next) => {
     try {
         const card = await Card.getCard(req.params.id);
         await Card.deleteCard(req.params.id);
-        res.status(200).json({ success: true, message: 'Card eliminated', card_eliminated: card });
+        res.status(200).json({ success: true, message: 'Card eliminated', data: card });
     } catch (error) {
         next(new Error(error));
     }

@@ -1,14 +1,11 @@
 import React, { createContext, useReducer, useContext } from 'react';
 import axios from 'axios';
 import AuthReducer from './reducers/AuthReducer';
-import { useHistory } from 'react-router-dom';
 import { ErrorContext } from './ErrorState';
 
 export const AuthContext = createContext();
 
 export function AuthProvider(props) {
-
-    const history = useHistory()
 
     const { setError } = useContext(ErrorContext);
 

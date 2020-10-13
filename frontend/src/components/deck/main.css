@@ -1,12 +1,11 @@
 /* DECKS PAGE */
 
-.fa-edit {
+.controlls-container {
     background-color: lightblue;
-    border-radius: 50%;
     padding: 1rem;
 }
 
-.deck-container {
+.deck-container, .card-container {
     background-color: lightblue;
     height: 40vh;
     border-radius: 5%;
@@ -22,7 +21,7 @@
     z-index: 100;
 }
 
-.add-deck-container {
+.add-deck-container, .add-card-container {
     background-color: white;
     border: 1px solid lightblue;
     height: 40vh;
@@ -30,15 +29,59 @@
     border-radius: 5%;
 }
 
-.add-deck-container > i {
+.add-deck-container > i, .add-card-container > i {
     color: lightblue;
 }
 
-.add-deck-input {
+.add-deck-input, .add-card-input {
     border: none;
     background-color: lightblue;
 }
 
-.add-deck-input:focus {
+.add-deck-input:focus, .update-deck-input:focus, .add-card-input:focus, .update-card-input:focus {
     text-decoration: none;
+}
+
+.update-deck-input, .update-card-input {
+    border: none;
+    background-color: #fff;
+}
+
+
+
+
+/* PLAY */
+.flip-card {
+    perspective: 1000px;
+    margin-top: 5.5rem;
+}
+
+.flip-card-inner {
+    position: relative;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.flip-card-inner-active {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front-learn, .flip-card-back-learn {
+    background-color: lightblue;
+    position: absolute;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 50px;
+    padding: 2rem 2rem;
+    min-height: 60vh;
+    width: 80%;
+}
+
+.flip-card-back-learn {
+    transform: rotateY(180deg);
+}
+
+.controllers {
+    position: relative;
+    top: 65vh;
 }
