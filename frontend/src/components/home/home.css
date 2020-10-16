@@ -28,10 +28,15 @@
     background-color: white;
     border-radius: 50px;
     padding: 10rem 2rem;
+    max-height: 77.5vh;
     min-height: 77.5vh;
 }
 
 
 .flip-card-back {
     transform: rotateY(180deg);
+}
+
+.update-profile-input {
+    width: 65%;
 }

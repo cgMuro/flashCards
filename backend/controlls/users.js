@@ -42,8 +42,13 @@ exports.createUser = async(req, res, next) => {
 // @acces --> Private
 exports.updateUser = async(req, res, next) => {
     try {
-        const field = Object.keys(req.body)[0];
-        const value = req.body[field];
+        let field = Object.keys(req.body)[0];
+        let value = req.body[field];
+        // Hash new password
+        if (field === 'password') {
+            const salt = await bcrypt.genSalt(10);
+            value = await bcrypt.hash(value, salt);
+        }
         await User.updateUser(req.params.id, field, value);
         const updUser = await User.getUserbyId(req.params.id);
         res.status(200).json({ success:true, message: 'User update', user: updUser });

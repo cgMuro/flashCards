@@ -32,6 +32,16 @@ export default (state, { type, payload }) => {
                 user: null,
                 token: null
             }
+        case 'UPDATE_USERNAME':
+            state.user.username = payload[0].username;
+            return {
+                ...state
+            }
+        case 'UPDATE_PASSWORD':
+            state.user.password = payload[0].password;
+            return {
+                ...state
+            }
         default:
             return state
     }

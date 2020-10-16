@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom'
 
 
@@ -6,13 +6,13 @@ import { useHistory } from 'react-router-dom'
 import './home.css';
 import { AuthContext } from '../../context/AuthState';
 import { AlertContext } from '../../context/AlertState';
-import { Button, Container } from 'reactstrap';
+import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
 
 
 export default function Home() {
 
     const history = useHistory();
-    const { auth, logout } = useContext(AuthContext);
+    const { auth, logout, updateUserUsername, updateUserPassword } = useContext(AuthContext);
     const { setAlertMsg } = useContext(AlertContext);
 
     // Don't allow access if is unathorized
@@ -29,6 +29,46 @@ export default function Home() {
             element.classList.remove('flip-card-inner-active');
         } else {
             element.classList.add('flip-card-inner-active');
+        }
+    }
+
+    // Update user
+    const [update, setUpdate] = useState(false);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleUpdateState = () => {
+        setUpdate(prevState => !prevState);
+
+        // Update username/password if something is typed
+        if (username != '') {
+            updateUsername(null);
+        }
+        if (password != '') {
+            updatePassword(null);
+        }
+    }
+
+    const updateUsername = (e) => {
+        updateUserUsername(username);
+        setUsername('');
+        setPassword('');
+        setUpdate(() => false);
+
+        if (e) {
+            e.preventDefault();
+        }
+    }
+
+
+    const updatePassword = (e) => {
+        updateUserPassword(password);
+        setUsername('');
+        setPassword('');
+        setUpdate(() => false);
+
+        if (e) {
+            e.preventDefault();
         }
     }
 
@@ -72,17 +112,78 @@ export default function Home() {
                             </Container>
                             <Container fluid className="flip-card-back">
                                 <h3 className="text-center mb-5">Profile</h3>
-                                <p><span className="mr-5 pr-5" style={{ color: 'gray' }}>Username</span>{auth.user.username}</p>
-                                <hr/>
-                                <p><span className="mr-5 pr-5" style={{ color: 'gray' }}>Email</span>{auth.user.email}</p>
-                                <hr/>
-                                <p><span className="mr-5 pr-5" style={{ color: 'gray' }}>Password</span>*********</p>
-                                <hr/>
+                                <>
+                                    {
+                                        update
+                                            ?
+                                            <Form onSubmit={(e) => updateUsername(e)} inline>
+                                                <Label style={{ color: 'gray' }} for="update-username">
+                                                    Username
+                                                </Label>
+                                                <Input
+                                                    id="update-username"
+                                                    type="text"
+                                                    name="username"
+                                                    value={username}
+                                                    placeholder={auth.user.username}
+                                                    onChange={(e) => setUsername(e.target.value)}
+                                                    className="update-profile-input ml-2 my-auto"
+                                                    bsSize="sm"
+                                                />
+                                            </Form>
+                                            :
+                                            <p className="pb-2">
+                                                <span className="mr-5 pr-5" style={{ color: 'gray' }}>Username</span>
+                                                {auth.user.username}
+                                            </p>
+                                    }
+                                </>
+                                <hr />
+                                <p><span className="mr-5 pr-5 pb-2" style={{ color: 'gray' }}>Email</span>{auth.user.email}</p>
+                                <hr />
+                                <>
+                                    {
+                                        update
+                                            ?
+                                            <Form onSubmit={(e) => updatePassword(e)} inline>
+                                                <Label style={{ color: 'gray' }} for="update-password">
+                                                    Password
+                                                </Label>
+                                                <Input
+                                                    id="update-password"
+                                                    type="password"
+                                                    name="password"
+                                                    value={password}
+                                                    onChange={(e) => setPassword(e.target.value)}
+                                                    className="update-profile-input ml-2 my-auto"
+                                                    bsSize="sm"
+                                                />
+                                            </Form>
+                                            :
+                                            <p className="pb-2">
+                                                <span className="mr-5 pr-5" style={{ color: 'gray' }}>Password</span>
+                                                *********
+                                            </p>
+                                    }
+                                </>
+                                <hr />
+                                <Button
+                                    color="dark"
+                                    outline
+                                    block
+                                    className="mt-5 mb-1"
+                                    onClick={() => handleUpdateState()}
+                                >
+                                    Update Profile
+                                </Button>
                                 <Button
                                     color="primary"
                                     block
-                                    className="mt-5 mb-1"
-                                    onClick={() => flipCard()}
+                                    className=""
+                                    onClick={() => {
+                                        flipCard();
+                                        setUpdate(() => false);
+                                    }}
                                 >
                                     Home
                                 </Button>

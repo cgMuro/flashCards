@@ -87,6 +87,25 @@ export function AuthProvider(props) {
         }
     }
 
+    // UPDATE USER USERNAME
+    const updateUserUsername = async (username) => {
+        try {
+            const res = await axios.put(`/api/users/${auth.user.id}`, { username }, tokenConfig());
+            dispatch({ type: 'UPDATE_USERNAME', payload: res.data.user });
+        } catch (error) {
+            setError(error.response.data, error.response.status);
+        }
+    }
+
+    // UPDATE USER PASSWORD
+    const updateUserPassword = async (password) => {
+        try {
+            const res = await axios.put(`/api/users/${auth.user.id}`, { password }, tokenConfig());
+            dispatch({ type: 'UPDATE_PASSWORD', payload: res.data.user });
+        } catch (error) {
+            setError(error.response.data, error.response.status);
+        }
+    }
 
     //LOGOUT
     const logout = () => {
@@ -94,7 +113,7 @@ export function AuthProvider(props) {
     }
 
     return (
-        <AuthContext.Provider value={{ auth, tokenConfig, loadUser, register, login, logout }}>
+        <AuthContext.Provider value={{ auth, tokenConfig, loadUser, register, login, logout, updateUserUsername, updateUserPassword}}>
             {props.children}
         </AuthContext.Provider>
     )
