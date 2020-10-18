@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const auth = (req, res, next) => {
+    // Get token
     const token = req.header('x-auth-token');
 
     // Check for token
@@ -12,6 +13,7 @@ const auth = (req, res, next) => {
         req.user = decoded;
         next();
     } catch (error) {
+        // Set response status
         res.status(400).json({ success: false, message: 'Token is invalid' });
     }
 }

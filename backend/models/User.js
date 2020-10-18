@@ -6,7 +6,7 @@ const query = util.promisify(cursor.query).bind(cursor);
 
 
 class User {
-
+    
     // Create user table
     async createUserTable() {
         try {
@@ -20,7 +20,7 @@ class User {
                     PRIMARY KEY(id)
                 )`,
             );
-            console.log('User table created');
+            console.log('User table initiated');
             return;
         } catch (error) {
             return error;

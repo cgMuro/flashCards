@@ -26,6 +26,7 @@ export function CardProvider(props) {
     const getCards = async (deck_id, shuffle = false) => {
         try {
             const res = await axios.get(`/api/cards/deck/${deck_id}`, tokenConfig());
+            // Shuffle card if needed
             if (shuffle) {
                 shuffleCards(res.data.data);
             }
@@ -59,7 +60,6 @@ export function CardProvider(props) {
     const updateCard = async ({ id, question, answer }) => {
         try {
             const res = await axios.put(`/api/cards/${id}`, { question, answer }, tokenConfig());
-            console.log(res.data)
             dispatch({ type: 'UPDATE', payload: res.data.data });
         } catch (error) {
             setError(error.message, error.name);
@@ -77,7 +77,7 @@ export function CardProvider(props) {
     }
 
     return (
-        <CardContext.Provider value={{ cardState, getCards, getCard, createCard, updateCard, deleteCard, shuffleCards }}>
+        <CardContext.Provider value={{ cardState, getCards, getCard, createCard, updateCard, deleteCard }}>
             {props.children}
         </CardContext.Provider>
     )

@@ -57,7 +57,6 @@ export function DeckProvider(props) {
     const deleteDeck = async(id) => {
         try {
             const res = await axios.delete(`/api/decks/${id}`, tokenConfig());
-            console.log(res);
             dispatch({ type: 'DELETE', payload: res.data.data });
         } catch (error) {
             setError(error.message, error.name);

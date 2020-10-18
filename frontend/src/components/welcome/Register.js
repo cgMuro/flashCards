@@ -15,15 +15,15 @@ export default function Register() {
     }
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        
         const newUser = {
             username,
             email,
             password
         }
-
+        // Register user
         register(newUser);
+
+        e.preventDefault();
     }
 
     return (

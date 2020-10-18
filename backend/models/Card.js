@@ -6,7 +6,7 @@ const query = util.promisify(cursor.query).bind(cursor);
 
 
 class Card {
-
+    
     // Create card table
     async createCardTable() {
         try {
@@ -23,7 +23,7 @@ class Card {
                     FOREIGN KEY (deck_id) REFERENCES Deck(id)
                 )`
             );
-            console.log('Card table created');
+            console.log('Card table initiated');
             return;
         } catch (error) {
             return error;
@@ -78,11 +78,13 @@ class Card {
     // Update card
     async updateCard({ id, question, answer }) {
         try {
+            // Update question
             if (question) {
                 const sql = mysql.format("UPDATE Card SET question=? WHERE id=?", [question, id]);
                 const res = await query(sql);
                 cursor.commit();
             }
+            // Update answer
             if (answer) {
                 const sql = mysql.format("UPDATE Card SET answer=? WHERE id=?", [answer, id]);
                 const res = await query(sql);

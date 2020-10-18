@@ -19,6 +19,7 @@ export function AuthProvider(props) {
 
     // CONFIG TOKEN
     const tokenConfig = () => {
+        // Get token from local storage
         const token = localStorage.getItem('token');
 
         const config = {
@@ -27,6 +28,7 @@ export function AuthProvider(props) {
             }
         }
 
+        // If token, set headers
         if (token) {
             config.headers['x-auth-token'] = token;
         }
@@ -87,7 +89,7 @@ export function AuthProvider(props) {
         }
     }
 
-    // UPDATE USER USERNAME
+    // UPDATE USER'S USERNAME
     const updateUserUsername = async (username) => {
         try {
             const res = await axios.put(`/api/users/${auth.user.id}`, { username }, tokenConfig());
@@ -97,7 +99,7 @@ export function AuthProvider(props) {
         }
     }
 
-    // UPDATE USER PASSWORD
+    // UPDATE USER'S PASSWORD
     const updateUserPassword = async (password) => {
         try {
             const res = await axios.put(`/api/users/${auth.user.id}`, { password }, tokenConfig());

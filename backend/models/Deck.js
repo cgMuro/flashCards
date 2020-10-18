@@ -20,7 +20,7 @@ class Deck {
                     FOREIGN KEY (user_id) REFERENCES User(id)
                 )`
             );
-            console.log('Deck table created');
+            console.log('Deck table initiated');
             return;
         } catch (error) {
             console.log(error)

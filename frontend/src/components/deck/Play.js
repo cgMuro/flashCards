@@ -11,7 +11,9 @@ import { AlertContext } from '../../context/AlertState';
 export default function Play() {
 
     const history = useHistory();
+    // Get deck id from url
     const deck_id = history.location.pathname.split('/')[2];
+    // Get deck name from url
     const deck_name = history.location.pathname.split('/')[3].replace('%20', ' ');
 
     const { auth } = useContext(AuthContext);
@@ -26,16 +28,16 @@ export default function Play() {
     }, [auth.isAuthenticated]);
 
 
-    const { cardState, getCards, shuffleCards } = useContext(CardContext);
+    const { cardState, getCards } = useContext(CardContext);
 
     const [isQuestion, setIsQuestion] = useState(true);
 
-
+    // Get cards from database and shuffle them
     useEffect(() => {
         getCards(deck_id, true);
     }, []);
 
-
+    // Flip card animation function
     const flipCard = () => {
         const element = document.querySelector('.flip-card-inner');
         if (element.classList.contains('flip-card-inner-active')) {
@@ -48,7 +50,7 @@ export default function Play() {
 
     // Handling cards
     const [cardIDX, setCardIDX] = useState(0);
-
+    // Previous card function
     const previousCard = () => {
         if (cardIDX > 0) {
             // Flip card if answer is visible
@@ -62,7 +64,7 @@ export default function Play() {
             }
         }
     }
-
+    // Next card function
     const nextCard = () => {
         if (cardIDX < cardState.length - 1) {
             // Flip card if answer is visible
@@ -94,7 +96,7 @@ export default function Play() {
                 <Container fluid className="flip-card-inner d-flex justify-content-center">
                     {
                         cardState.map((card, idx) => {
-                            if (idx == cardIDX) {
+                            if (idx === cardIDX) {
                                 return (
                                     <Container fluid key={card.id}>
                                         <Container fluid className="flip-card-front-learn text-center">
@@ -106,6 +108,7 @@ export default function Play() {
                                     </Container>
                                 )
                             }
+                            return null;
                         })
                     }
                 </Container>

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Container, Row, Col, Input, Form } from 'reactstrap';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 // Components, css
 import './main.css';
@@ -26,15 +26,13 @@ export default function Decks({ editState }) {
     const { deckState, getDecks, createDeck, updateDeck, deleteDeck } = useContext(DeckContext);
 
 
-
     // Get decks from database
     useEffect(() => {
         getDecks();
     }, []);
 
 
-
-    // CREATE NEW DECK stuff
+    // CREATE NEW DECK
     // Init states
     const [addState, setAddState] = useState(false);
     const [newDeckName, setNewDeckName] = useState('');
@@ -43,7 +41,6 @@ export default function Decks({ editState }) {
     const handleAddState = () => {
         setAddState(() => true);
     }
-
     // Submit new deck function
     const submitNewDeck = (e) => {
         createDeck(newDeckName);
@@ -52,7 +49,7 @@ export default function Decks({ editState }) {
     }
 
 
-    // UPDATE DECK stuff
+    // UPDATE DECK
     const submitUpdateDeck = (e) => {
         updateDeck(e.target.firstElementChild.id, e.target.firstElementChild.value);
         setAlertMsg(`Deck updated`);
@@ -60,7 +57,7 @@ export default function Decks({ editState }) {
     }
 
 
-    // DELETE DECK stuff
+    // DELETE DECK
     // Delete function
     const handleDelete = ({ id, name }) => {
         deleteDeck(id);

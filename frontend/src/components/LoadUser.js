@@ -9,6 +9,7 @@ export default function LoadUser() {
     const { loadUser } = useContext(AuthContext)
     const { alertMsg, setAlertMsg } = useContext(AlertContext);
 
+    // Check if user is still authenticated
     useEffect(() => {
         loadUser();
     }, [])

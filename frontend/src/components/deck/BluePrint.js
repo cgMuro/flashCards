@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Container, Row, Col, Input, Form } from 'reactstrap';
+import { Container } from 'reactstrap';
 import { useHistory } from 'react-router-dom';
 
 // Components, css
@@ -26,6 +26,7 @@ export default function BluePrint() {
     const [path, setPath] = useState('')
 
     useEffect(() => {
+        // Set path based on the url
         setPath(() => history.location.pathname);
     }, [history.location.pathname])
 
@@ -44,7 +45,7 @@ export default function BluePrint() {
                     className="fas fa-chevron-circle-left fa-lg"
                     style={{ cursor: 'pointer' }}
                     onClick={() => {
-                        if (path == '/decks') {
+                        if (path === '/decks') {
                             history.push('/');
                         } else {
                             history.goBack();
@@ -58,7 +59,7 @@ export default function BluePrint() {
             </Container>
             <Container fluid className="mt-5">
                 {
-                    path == '/decks'
+                    path === '/decks'
                         ?
                         <Decks editState={editState} handleEditState={handleEditState} />
                         :

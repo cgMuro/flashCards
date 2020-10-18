@@ -1,12 +1,11 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { useHistory } from 'react-router-dom'
-
+import { useHistory } from 'react-router-dom';
 
 // Components, css
 import './home.css';
 import { AuthContext } from '../../context/AuthState';
 import { AlertContext } from '../../context/AlertState';
-import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
+import { Button, Container, Form, Input, Label } from 'reactstrap';
 
 
 export default function Home() {
@@ -23,6 +22,7 @@ export default function Home() {
         }
     }, [auth.isAuthenticated]);
 
+    // Flip card animation function
     const flipCard = () => {
         const element = document.querySelector('.flip-card-inner');
         if (element.classList.contains('flip-card-inner-active')) {
@@ -41,19 +41,23 @@ export default function Home() {
         setUpdate(prevState => !prevState);
 
         // Update username/password if something is typed
-        if (username != '') {
+        if (username !== '') {
             updateUsername(null);
         }
-        if (password != '') {
+        if (password !== '') {
             updatePassword(null);
         }
     }
 
+    // Update username function
     const updateUsername = (e) => {
+        // Update username
         updateUserUsername(username);
+        // Reset states
         setUsername('');
         setPassword('');
         setUpdate(() => false);
+        // Send message
         setAlertMsg('Username Updated');
 
         if (e) {
@@ -61,12 +65,15 @@ export default function Home() {
         }
     }
 
-
+    // Update password function
     const updatePassword = (e) => {
+        // Update password
         updateUserPassword(password);
+        // Reset states
         setUsername('');
         setPassword('');
         setUpdate(() => false);
+        // Send message
         setAlertMsg('Password Updated');
 
         if (e) {

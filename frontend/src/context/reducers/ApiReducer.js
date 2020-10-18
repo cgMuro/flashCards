@@ -11,13 +11,13 @@ export default (state, { type, payload }) => {
             ]
         case 'UPDATE':
             state.forEach((item, idx) => {
-                if (item.id == payload.id) {
+                if (item.id === payload.id) {
                     state[idx] = payload;
                 } 
             });
             return state;
         case 'DELETE':
-            return state.filter(item => item.id != payload.id);
+            return state.filter(item => item.id !== payload.id);
         default:
             return state
     }

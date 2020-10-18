@@ -16,12 +16,11 @@ export default function Login() {
     }
 
     const handleSubmit = (e) => {
-        
         const user = {
             email,
             password
         }
-
+        // Login user
         login(user)
 
         e.preventDefault();

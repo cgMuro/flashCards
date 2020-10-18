@@ -18,6 +18,7 @@ export default function Welcome() {
     const { auth } = useContext(AuthContext);
     const { error } = useContext(ErrorContext);
 
+    // Check the result of login/register
     useEffect(() => {
         if (error.id === 'REGISTER_FAIL' || error.id === 'LOGIN_FAIL') {
             setMsg(error.msg.message)

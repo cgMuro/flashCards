@@ -2,16 +2,17 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-// Components
+// Context
 import { ErrorProvider } from './context/ErrorState';
 import { AuthProvider } from './context/AuthState';
 import { AlertProvider } from './context/AlertState';
 import { DeckProvider } from './context/DeckState';
+import { CardProvider } from './context/CardState';
+// Components
 import LoadUser from './components/LoadUser';
 import Welcome from './components/welcome/Welcome';
 import Home from './components/home/Home';
 import BluePrint from './components/deck/BluePrint';
-import { CardProvider } from './context/CardState';
 import Play from './components/deck/Play';
 
 function App() {

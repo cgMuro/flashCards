@@ -11,7 +11,9 @@ import { AlertContext } from '../../context/AlertState';
 export default function Deck({ editState }) {
 
     const history = useHistory();
+    // Get deck id from url
     const deck_id = history.location.pathname.split('/')[2];
+    // Get deck name from url
     const deck_name = history.location.pathname.split('/')[3];
     const { auth } = useContext(AuthContext);
     const { setAlertMsg } = useContext(AlertContext);
@@ -28,7 +30,7 @@ export default function Deck({ editState }) {
     // Init states
     const { cardState, getCards, createCard, updateCard, deleteCard } = useContext(CardContext);
 
-
+    // Get cards from database
     useEffect(() => {
         getCards(deck_id);
     }, []);
@@ -50,9 +52,8 @@ export default function Deck({ editState }) {
 
     const [addState, setAddState] = useState(false);
 
-
+    // Create/update card
     const submitCard = (e) => {
-
         if (addState) {
             createCard({ deck_id, question, answer });
             setAddState(() => false);
@@ -70,7 +71,6 @@ export default function Deck({ editState }) {
     }
 
 
-    // DELETE CARD stuff
     // Delete function
     const handleDelete = (id) => {
         deleteCard(id);

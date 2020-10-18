@@ -1,8 +1,7 @@
 const express = require('express');
 const auth = require('../middlewares/auth');
 
-const router = express.Router();
-
+// Get Deck controlls
 const { 
     getDeck, 
     getDecks, 
@@ -11,6 +10,10 @@ const {
     deleteDeck
 } = require('../controlls/decks');
 
+// Init router
+const router = express.Router();
+
+// Routes
 router.route('/').get(auth, getDecks);
 router.route('/:id').get(auth, getDeck);
 

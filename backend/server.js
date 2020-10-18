@@ -1,7 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const { connectDB, cursor }  = require('./config/database');   // Connect to database function
+const { connectDB }  = require('./config/database');   // Connect to database function
 const User = require('./models/User');
 const Deck = require('./models/Deck');
 const Card = require('./models/Card');

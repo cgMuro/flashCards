@@ -7,7 +7,9 @@ const User = require('../models/User');
 // @route --> GET api/auth
 // @acces --> Private
 exports.getUser = async (req, res, next) => {
+    // Get user
     const user = await User.getUserbyId(req.user.id);
+    // Set response status
     res.status(200).json({ success: true, user });
 }
 
@@ -19,7 +21,7 @@ exports.authUser = async (req, res, next) => {
 
     // Check if all fields are filles
     if (!email || !password) return res.status(500).json({ success: false, message: 'Please enter all fields' });
-
+    // Get user
     const user = await User.getUser(email);
 
     // Check if user exists
@@ -29,15 +31,17 @@ exports.authUser = async (req, res, next) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(500).json({ success: false, message: 'Invalid credentials' });
 
-
+    // Hide user password
     user.password = '*******';
 
+    // Sign JsonWebToken
     jwt.sign(
         { id: user.id },
         process.env.JWT_SECRET,
         { expiresIn: 3600 },
         (err, token) => {
             if (err) throw err;
+            // Set response status
             res.status(200).json({
                 success: true,
                 user,
