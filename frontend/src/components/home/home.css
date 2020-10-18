@@ -1,7 +1,7 @@
 .wrapper {
     width: 100vw;
     height: 100vh;
-    background-color: lightblue;
+    background-color: #232121;
     display: flex;
     justify-content: center;
 }
@@ -39,4 +39,25 @@
 
 .update-profile-input {
     width: 65%;
+}
+
+#view-profile-button {
+    background-color: #2a9d8f;
+    color: #232121;
+    border-color: #2a9d8f;
+}
+
+.welcome-name {
+    font-weight: 600;
+    font-size: 30px;
+}
+
+@media (min-width: 1000px) {
+    .flip-card {
+        width: 30%;
+    }
+
+    .update-profile-input {
+        width: 100%;
+    }
 }

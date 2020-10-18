@@ -34,6 +34,7 @@ export default function Login() {
                 <label>Email</label>
                 <input
                     type="email"
+                    name="email"
                     value={email}
                     onChange={(e) => handleInput(setEmail, e)}
                     className="form-control"
@@ -44,6 +45,7 @@ export default function Login() {
                 <label>Password</label>
                 <input
                     type="password"
+                    name="password"
                     value={password}
                     onChange={(e) => handleInput(setPassword, e)}
                     className="form-control"
@@ -55,7 +57,7 @@ export default function Login() {
                     </p>
                 </FormText>
             </div>
-            <button type="submit" className="btn btn-primary btn-block mt-5">Submit</button>
+            <button type="submit" className="btn btn-outline-primary btn-block mt-5">Submit</button>
             <p className="create-account mt-3">First time? <Link to="/register">Create an account</Link></p>
         </form>
     )

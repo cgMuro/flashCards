@@ -33,6 +33,7 @@ export default function Register() {
                 <label>Username</label>
                 <input
                     type="name"
+                    name="username"
                     value={username}
                     onChange={(e) => handleInput(setUsername, e)}
                     className="form-control"
@@ -44,7 +45,8 @@ export default function Register() {
                 <label>Email</label>
                 <input
                     type="email"
-                    name={email}
+                    name="email"
+                    value={email}
                     onChange={(e) => handleInput(setEmail, e)}
                     className="form-control"
                     placeholder="example@gmail.com"
@@ -55,6 +57,7 @@ export default function Register() {
                 <label>Password</label>
                 <input
                     type="password"
+                    name="password"
                     value={password}
                     onChange={(e) => handleInput(setPassword, e)}
                     className="form-control"
@@ -62,7 +65,7 @@ export default function Register() {
                     required
                 />
             </div>
-            <button type="submit" className="btn btn-info btn-block mt-5">Register</button>
+            <button type="submit" className="btn btn-outline-info btn-block mt-5">Register</button>
             <p className="back-login mt-3">Do you already have an account? <Link to="/login">Go back to login</Link></p>
         </form>
     )

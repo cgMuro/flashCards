@@ -38,10 +38,11 @@ export default function BluePrint() {
     }
 
     return (
-        <Container fluid className="p-0">
+        <Container fluid className="p-0" style={{ backgroundColor: '#232121' }}>
             <Container fluid className="controlls-container d-flex justify-content-between align-items-center">
                 <i
                     className="fas fa-chevron-circle-left fa-lg"
+                    style={{ cursor: 'pointer' }}
                     onClick={() => {
                         if (path == '/decks') {
                             history.push('/');
@@ -52,7 +53,7 @@ export default function BluePrint() {
                 <i
                     className="fas fa-edit fa-lg"
                     onClick={() => handleEditState()}
-                    style={editState ? { color: 'red' } : { color: 'black' }}
+                    style={editState ? { color: '#be0d13'} : { color: 'black' }}
                 ></i>
             </Container>
             <Container fluid className="mt-5">

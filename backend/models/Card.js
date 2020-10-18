@@ -82,13 +82,11 @@ class Card {
                 const sql = mysql.format("UPDATE Card SET question=? WHERE id=?", [question, id]);
                 const res = await query(sql);
                 cursor.commit();
-                return res;
             }
             if (answer) {
                 const sql = mysql.format("UPDATE Card SET answer=? WHERE id=?", [answer, id]);
                 const res = await query(sql);
                 cursor.commit();
-                return res;
             }
             return;
         } catch (error) {

@@ -54,6 +54,7 @@ export default function Home() {
         setUsername('');
         setPassword('');
         setUpdate(() => false);
+        setAlertMsg('Username Updated');
 
         if (e) {
             e.preventDefault();
@@ -66,6 +67,7 @@ export default function Home() {
         setUsername('');
         setPassword('');
         setUpdate(() => false);
+        setAlertMsg('Password Updated');
 
         if (e) {
             e.preventDefault();
@@ -80,22 +82,23 @@ export default function Home() {
                         ?
                         <Container fluid className="p-0 flip-card-inner">
                             <Container fluid className="flip-card-front">
-                                <h4 className="text-center" style={{ textTransform: 'uppercase' }}>
-                                    Welcome {auth.user.username}
+                                <h4 className="text-center d-flex align-items-center justify-content-center" style={{ textTransform: 'uppercase' }}>
+                                    Welcome <span className="welcome-name ml-2">{auth.user.username}</span>
                                 </h4>
                                 <Container fluid className="d-flex align-items-center justify-content-end flex-column">
                                     <Button
                                         block
                                         color="info"
+                                        outline
                                         className="mt-5 mb-2"
                                         onClick={() => history.push('/decks')}
                                     >
                                         Your Decks
                                     </Button>
                                     <Button
-                                        color="primary"
                                         className="mt-5 mb-1"
                                         onClick={() => flipCard()}
+                                        id="view-profile-button"
                                     >
                                         Profile
                                     </Button>
@@ -107,11 +110,12 @@ export default function Home() {
                                             history.push('/');
                                             history.go(0);
                                         }}
+                                        style={{ color: '#232121' }}
                                     >Logout</Button>
                                 </Container>
                             </Container>
                             <Container fluid className="flip-card-back">
-                                <h3 className="text-center mb-5">Profile</h3>
+                                <h3 className="text-center mb-5 font-weight-bold" style={{ color: '#2a9d8f' }}>Profile</h3>
                                 <>
                                     {
                                         update
@@ -127,7 +131,7 @@ export default function Home() {
                                                     value={username}
                                                     placeholder={auth.user.username}
                                                     onChange={(e) => setUsername(e.target.value)}
-                                                    className="update-profile-input ml-2 my-auto"
+                                                    className="update-profile-input ml-2 ml-lg-5 my-auto"
                                                     bsSize="sm"
                                                 />
                                             </Form>
@@ -155,7 +159,7 @@ export default function Home() {
                                                     name="password"
                                                     value={password}
                                                     onChange={(e) => setPassword(e.target.value)}
-                                                    className="update-profile-input ml-2 my-auto"
+                                                    className="update-profile-input ml-2 ml-lg-5 my-auto"
                                                     bsSize="sm"
                                                 />
                                             </Form>

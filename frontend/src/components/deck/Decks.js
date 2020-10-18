@@ -72,15 +72,18 @@ export default function Decks({ editState }) {
             {
                 deckState.length > 0
                     ?
-                    <Row className="mt-5 d-flex justify-content-center">
-                        {
-                            deckState.map(deck => (
+                    <>
+                        <h1 className="text-center decks-title">Your Decks</h1>
+                        <Row className="mt-3 d-flex justify-content-center">
+                            {
+                                deckState.map(deck => (
                                     <Col
                                         key={deck.id}
                                         xs="5"
+                                        lg="3"
                                         className="deck-container mx-2 my-4 d-flex justify-content-center align-items-center"
                                         onClick={() => {
-                                            if (!editState) { 
+                                            if (!editState) {
                                                 history.push(`/deck/${deck.id}/${deck.name}`);
                                             }
                                         }}
@@ -106,40 +109,66 @@ export default function Decks({ editState }) {
                                                 <p className="text-center">{deck.name}</p>
                                         }
                                     </Col>
-                            ))
-                        }
-                    </Row>
+                                ))
+                            }
+                            {
+                                editState
+                                    ?
+                                    <Col
+                                        sm="6"
+                                        lg="3"
+                                        className="add-deck-container m-4 d-flex justify-content-center align-items-center"
+                                        onClick={() => handleAddState()}
+                                    >
+                                        {
+                                            !addState
+                                                ?
+                                                <i className="fas fa-plus-circle fa-4x"></i>
+                                                :
+                                                <Form onSubmit={(e) => submitNewDeck(e)}>
+                                                    <Input
+                                                        type="text"
+                                                        value={newDeckName}
+                                                        onChange={(e) => setNewDeckName(e.target.value)}
+                                                        autoFocus
+                                                        className="add-deck-input"
+                                                    />
+                                                </Form>
+                                        }
+                                    </Col>
+                                    :
+                                    null
+                            }
+                        </Row>
+                    </>
                     :
                     <h3>You have no decks...create one</h3>
-
             }
             {
-                editState
+                editState && !deckState.length > 0
                     ?
-                    <Row>
-                        <Col
-                            sm={6}
-                            className="add-deck-container m-4 d-flex justify-content-center align-items-center"
-                            onClick={() => handleAddState()}
-                        >
-                            {
-                                !addState
-                                    ?
-                                    <i className="fas fa-plus-circle fa-4x"></i>
-                                    :
-                                    <Form onSubmit={(e) => submitNewDeck(e)}>
-                                        <Input
-                                            type="text"
-                                            value={newDeckName}
-                                            onChange={(e) => setNewDeckName(e.target.value)}
-                                            autoFocus
-                                            className="add-deck-input"
-                                        />
-                                    </Form>
-                            }
-                        </Col>
-                    </Row>
-
+                    <Col
+                        sm="6"
+                        lg="3"
+                        className="add-deck-container m-4 d-flex justify-content-center align-items-center"
+                        onClick={() => handleAddState()}
+                    >
+                        {
+                            !addState
+                                ?
+                                <i className="fas fa-plus-circle fa-4x"></i>
+                                :
+                                <Form onSubmit={(e) => submitNewDeck(e)}>
+                                    <Input
+                                        type="text"
+                                        value={newDeckName}
+                                        onChange={(e) => setNewDeckName(e.target.value)}
+                                        autoFocus
+                                        className="add-deck-input"
+                                    />
+                                </Form>
+                        }
+                    </Col>
                     :
                     null
             }

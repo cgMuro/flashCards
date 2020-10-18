@@ -59,6 +59,7 @@ export function CardProvider(props) {
     const updateCard = async ({ id, question, answer }) => {
         try {
             const res = await axios.put(`/api/cards/${id}`, { question, answer }, tokenConfig());
+            console.log(res.data)
             dispatch({ type: 'UPDATE', payload: res.data.data });
         } catch (error) {
             setError(error.message, error.name);

@@ -81,12 +81,12 @@ export default function Deck({ editState }) {
     return (
         <>
             <Container fluid className="mt-5">
-                <h1 className="text-center my-4">{deck_name}</h1>
+                <h1 className="text-center my-4" style={{ color: 'rgb(245, 237, 237)' }}>{deck_name}</h1>
                 {
                     cardState.length > 0
                         ?
                         <Container fluid>
-                            <Button block color="primary" onClick={() => history.push(`/deck/${deck_id}/${deck_name}/learn`)}>
+                            <Button block color="primary" outline onClick={() => history.push(`/deck/${deck_id}/${deck_name}/learn`)}>
                                 Start Learning
                             </Button>
                             <Row className="mt-5 d-flex justify-content-center">
@@ -95,6 +95,7 @@ export default function Deck({ editState }) {
                                         <Col
                                             key={card.id}
                                             xs="5"
+                                            lg="3"
                                             className="card-container mx-2 my-4 d-flex justify-content-center align-items-center flex-column"
                                         >
                                             {
@@ -117,34 +118,58 @@ export default function Deck({ editState }) {
                                                 }}
                                             >
                                                 <p className="text-center">{card.question}</p>
+                                                <hr />
                                                 <p className="text-center">{card.answer}</p>
                                             </Container>
                                         </Col>
                                     ))
                                 }
+                                {
+                                    editState
+                                        ?
+                                        <Col
+                                            xs="5"
+                                            lg="3"
+                                            className="add-card-container m-4 d-flex justify-content-center align-items-center"
+                                        >
+                                            <i
+                                                className="fas fa-plus-circle fa-4x"
+                                                onClick={() => {
+                                                    toggle();
+                                                    setAddState(() => true);
+                                                }}
+                                            ></i>
+                                        </Col>
+
+                                        :
+                                        null
+                                }
                             </Row>
 
                         </Container>
                         :
-                        <h3>You have no cards...create one</h3>
+                        <h3 style={{ color: 'rgb(245, 237, 237)' }} className="py-5">
+                            You have no cards in this deck.
+                            <br />
+                            Create one by clicking the icon in the top left corner.
+                        </h3>
                 }
                 {
-                    editState
+                    editState && !cardState.length > 0
                         ?
-                        <Row>
-                            <Col
-                                xs={5}
-                                className="add-card-container m-4 d-flex justify-content-center align-items-center"
-                            >
-                                <i
-                                    className="fas fa-plus-circle fa-4x"
-                                    onClick={() => {
-                                        toggle();
-                                        setAddState(() => true);
-                                    }}
-                                ></i>
-                            </Col>
-                        </Row>
+                        <Col
+                            xs="5"
+                            lg="3"
+                            className="add-card-container m-4 d-flex justify-content-center align-items-center"
+                        >
+                            <i
+                                className="fas fa-plus-circle fa-4x"
+                                onClick={() => {
+                                    toggle();
+                                    setAddState(() => true);
+                                }}
+                            ></i>
+                        </Col>
 
                         :
                         null
@@ -153,20 +178,20 @@ export default function Deck({ editState }) {
 
 
             <Modal isOpen={modal} toggle={toggle} centered>
-                <Form onSubmit={(e) => submitCard(e)}>
+                <Form onSubmit={(e) => submitCard(e)} className="m-4">
                     <FormGroup className="m-3">
                         <Label>
-                            Question
+                            <b>Question</b>
                         </Label>
                         <Input type="textarea" value={question} onChange={(e) => setQuestion(e.target.value)} />
                     </FormGroup>
                     <FormGroup className="m-3">
                         <Label>
-                            Answer
+                            <b>Answer</b>
                         </Label>
                         <Input type="textarea" value={answer} onChange={(e) => setAnswer(e.target.value)} />
                     </FormGroup>
-                    <Button type="submit">{addState ? 'Create' : 'Update'}</Button>
+                    <Button color="info" block type="submit" className="w-75 mx-auto">{addState ? 'Create' : 'Update'}</Button>
                 </Form>
             </Modal>
         </>

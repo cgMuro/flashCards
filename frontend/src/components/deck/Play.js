@@ -28,6 +28,8 @@ export default function Play() {
 
     const { cardState, getCards, shuffleCards } = useContext(CardContext);
 
+    const [isQuestion, setIsQuestion] = useState(true);
+
 
     useEffect(() => {
         getCards(deck_id, true);
@@ -41,6 +43,7 @@ export default function Play() {
         } else {
             element.classList.add('flip-card-inner-active');
         }
+        setIsQuestion(prevState => !prevState);
     }
 
     // Handling cards
@@ -76,11 +79,13 @@ export default function Play() {
 
 
     return (
-        <Container fluid className="p-0">
+        <Container fluid className="p-0 learning-container">
             <Container fluid className="controlls-container d-flex flex-row align-items-center">
                 <i
                     className="fas fa-chevron-circle-left fa-lg"
-                    onClick={() => { history.goBack() }}>
+                    onClick={() => { history.goBack() }}
+                    style={{ cursor: 'pointer' }}
+                >
                 </i>
                 <h4 className="m-auto">{deck_name}</h4>
             </Container>
@@ -93,10 +98,10 @@ export default function Play() {
                                 return (
                                     <Container fluid key={card.id}>
                                         <Container fluid className="flip-card-front-learn text-center">
-                                            <p className="mt-5 pt-5">{card.question}</p>
+                                            <p className="mt-5 pt-5 question-text">{card.question}</p>
                                         </Container>
                                         <Container fluid className="flip-card-back-learn text-center">
-                                            <p className="mt-5 pt-5">{card.answer}</p>
+                                            <p className="mt-5 pt-5 answer-text">{card.answer}</p>
                                         </Container>
                                     </Container>
                                 )
@@ -109,8 +114,8 @@ export default function Play() {
                 <Button color="primary" className="mr-2" style={{ width: '30%' }} onClick={() => previousCard()}>
                     Previous Card
                 </Button>
-                <Button color="dark" outline className="mx-3" onClick={() => flipCard()}>
-                    See Answer
+                <Button color="info" outline className="mx-3" onClick={() => flipCard()}>
+                    { isQuestion ? 'See Answer' : 'See Question' }
                 </Button>
                 <Button color="primary" className="ml-2" style={{ width: '30%' }} onClick={() =>nextCard()}>
                     Next Card
